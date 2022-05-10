@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+  yolov4:
+    image: yolov4
+    contaier_name: yolov4
+    environment:
+      - DISPLAY=172.0.0.1:0.0
+      - NVIDIA_VISIBLE_DEVICES=all
+    #use for the trainign and saving filess
+    volumes:
+      - /local:/docker
+    #Change acording to the actual code
+    entrypoint: ["./darknet", "-d", "memory_limit=-1", "vendor/bin/phpunit"]
+    # Which ever works
+    command: ./darknet 
+
+    deploy:
+      resources:
+          reservations:
+            devices:
+            - capabilities: [gpu]
+              driver: nvidia
